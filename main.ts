@@ -2,6 +2,7 @@ function send_to_next () {
     radio.sendString("W" + convertToText(id + 1))
 }
 function flash () {
+    pins.digitalWritePin(DigitalPin.P8, 1)
     basic.showLeds(`
         # # # # #
         # # # # #
@@ -9,8 +10,10 @@ function flash () {
         # # # # #
         # # # # #
         `)
-    basic.pause(500)
+    music.play(music.tonePlayable(1000, music.beat(BeatFraction.Whole)), music.PlaybackMode.InBackground)
+    basic.pause(1000)
     basic.clearScreen()
+    pins.digitalWritePin(DigitalPin.P8, 0)
 }
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "W" + convertToText(id)) {
